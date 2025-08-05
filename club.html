@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoEv - Club Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        #light-rays-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .club-header {
+            text-align: center;
+            margin: 40px 0;
+            font-family: 'Orbitron', monospace;
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: #ff960c;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .dashboard-title {
+            text-align: center;
+            color: #ffffff;
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 20px auto 40px auto;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6);
+            width: 100%;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        @keyframes metallic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .landscape-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .auth-card-landscape {
+            background: rgba(235, 211, 248, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(173, 73, 225, 0.2);
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-card-landscape:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(173, 73, 225, 0.4);
+        }
+        
+        /* Bento Layout Styles */
+        .bento-container {
+            display: grid;
+            grid-template-columns: 18% 82%;
+            gap: 180px;
+            min-height: 80vh;
+            margin-top: 40px;
+        }
+        
+        .dashboard-sidebar {
+            background: rgba(235, 211, 248, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(173, 73, 225, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            height: fit-content;
+            min-width: 250px;
+        }
+        
+        .dashboard-sidebar:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(173, 73, 225, 0.4);
+        }
+        
+        .form-panel {
+            background: rgba(235, 211, 248, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(173, 73, 225, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .form-panel:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(173, 73, 225, 0.4);
+        }
+        
+        .form-panel.hidden {
+            display: none;
+        }
+        
+        .form-panel.visible {
+            display: flex;
+        }
+        
+        .welcome-message {
+            text-align: center;
+            color: var(--club-color, #AD49E1);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 
+                0 0 10px var(--club-color, #AD49E1),
+                0 0 20px var(--club-color, #AD49E1),
+                0 0 30px var(--club-color, #AD49E1);
+            background: linear-gradient(45deg, var(--club-color, #AD49E1), #ffffff, var(--club-color, #AD49E1));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: metallic 3s ease-in-out infinite;
+        }
+        
+        .welcome-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .button-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .dashboard-btn {
+            width: 100%;
+            padding: 12px 16px;
+            margin: 8px 0;
+            background: linear-gradient(0deg, #000000, #3432c7);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dashboard-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(52, 50, 199, 0.4);
+        }
+        
+        .dashboard-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .dashboard-btn:hover::before {
+            left: 100%;
+        }
+        
+
+        
+        /* Form Styles */
+        .form-container {
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .form-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #AD49E1;
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .form-full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-label {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-input {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(173, 73, 225, 0.5);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #AD49E1;
+            box-shadow: 0 0 0 3px rgba(173, 73, 225, 0.1);
+        }
+        
+        .form-textarea {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(173, 73, 225, 0.5);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .form-textarea:focus {
+            outline: none;
+            border-color: #AD49E1;
+            box-shadow: 0 0 0 3px rgba(173, 73, 225, 0.1);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .form-btn {
+            background: linear-gradient(0deg, #000000, #3432c7);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(52, 50, 199, 0.4);
+        }
+        
+        .cancel-btn {
+            background: transparent;
+            border: 2px solid #AD49E1;
+            color: #AD49E1;
+        }
+        
+        .cancel-btn:hover {
+            background: #AD49E1;
+            color: white;
+        }
+        
+        /* Edit Panel Styles */
+        .edit-panel {
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .edit-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .edit-tab {
+            background: transparent;
+            border: 2px solid #AD49E1;
+            color: #AD49E1;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .edit-tab.active {
+            background: #AD49E1;
+            color: white;
+        }
+        
+        .edit-tab:hover {
+            background: #AD49E1;
+            color: white;
+        }
+        
+        .edit-content {
+            display: none;
+        }
+        
+        .edit-content.active {
+            display: block;
+        }
+        
+        .edit-items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .edit-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid var(--club-color, #AD49E1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            min-height: 70px;
+            max-height: 90px;
+        }
+        
+        .edit-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .edit-item:hover::before {
+            left: 100%;
+        }
+        
+        .edit-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 0 20px var(--club-color, #AD49E1);
+            border-color: var(--club-color, #AD49E1);
+        }
+        
+        .edit-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        
+        .edit-item-title {
+            color: var(--club-color, #AD49E1);
+            font-weight: 600;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .edit-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .edit-action-btn {
+            padding: 5px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 6px;
+        }
+        
+        .edit-btn {
+            background: #4ECDC4;
+            color: white;
+        }
+        
+        .delete-btn {
+            background: #FF6B6B;
+            color: white;
+        }
+        
+        .edit-btn:hover {
+            background: #45B7D1;
+        }
+        
+        .delete-btn:hover {
+            background: #F1948A;
+        }
+        
+        .edit-item-details {
+            color: white;
+            line-height: 1.2;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+        }
+        
+        .edit-item-details p {
+            margin: 2px 0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        @media (max-width: 1200px) {
+            .bento-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .dashboard-sidebar {
+                order: 2;
+            }
+            
+            .form-panel {
+                order: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="light-rays-bg"></div>
+    <nav class="navbar">
+        <div class="logo">CoEv</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Event Templates</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="recruitments.html">Recruitments</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <button class="logout-btn" onclick="logout()" style="
+                background: transparent;
+                border: 2px solid #AD49E1;
+                color: #AD49E1;
+                border-radius: 8px;
+                padding: 8px 16px;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 0.9rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            " onmouseover="this.style.background='#AD49E1';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='#AD49E1'">
+                Logout
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Check if club is logged in -->
+        <div id="club-auth" class="landscape-container" style="display: none;">
+            <div class="auth-card-landscape">
+                <div style="text-align: center; width: 100%;">
+                    <h2 style="margin-bottom: 30px; color: #AD49E1; font-size: 2rem;">Welcome to Club Portal</h2>
+                    <p style="margin-bottom: 30px; color: #666; line-height: 1.6; font-size: 1.1rem;">
+                        Please login to access your club dashboard and manage your events and recruitments.
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center;">
+                        <a href="club-login.html" class="neu-btn" style="
+                            background: linear-gradient(0deg, #000000, #3432c7);
+                            color: #ffffff;
+                            text-decoration: none;
+                            padding: 12px 24px;
+                            font-size: 1.1rem;
+                        ">Login</a>
+                        <a href="club-signup.html" class="neu-btn" style="
+                            background: transparent;
+                            border: 1px solid #AD49E1;
+                            color: #AD49E1;
+                            text-decoration: none;
+                            padding: 12px 24px;
+                            font-size: 1.1rem;
+                        ">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="club-dashboard" class="landscape-container" style="display: none;">
+            <h2 class="dashboard-title">CLUB DASHBOARD</h2>
+            
+            <div class="bento-container">
+                <!-- Left Sidebar - Dashboard -->
+                <div class="dashboard-sidebar">
+                    <div style="text-align: center;">
+                        <h2 style="margin-bottom: 25px; color: #ffffff; font-size: 1.8rem; font-family: 'Montserrat', sans-serif; font-weight: 600;">Welcome, <span id="club-name"></span>!</h2>
+                        <div class="button-grid">
+                            <button class="dashboard-btn" id="register-event-btn">
+                                📅 Register Event
+                            </button>
+                            <button class="dashboard-btn" id="upload-recruitment-btn">
+                                👥 Upload Recruitment
+                            </button>
+                            <button class="dashboard-btn" id="edit-content-btn">
+                                ✏️ Edit Content
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Panel - Forms and Content -->
+                <div class="form-panel" id="form-panel">
+                    <!-- Welcome Message -->
+                    <div id="welcome-content">
+                        <div class="welcome-message" style="color: var(--club-color, #AD49E1); font-size: 2.5rem; font-weight: 800; font-family: 'Orbitron', monospace; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 20px var(--club-color, #AD49E1); background: linear-gradient(45deg, var(--club-color, #AD49E1), #ffffff, var(--club-color, #AD49E1)); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: metallic 3s ease-in-out infinite;">Welcome to Your Club Dashboard</div>
+                        <div class="welcome-subtitle" style="color: white;">
+                            Select an option from the sidebar to get started with managing your club's events and recruitments.
+                </div>
+            </div>
+            
+                    <!-- Event Form -->
+                    <div id="event-form-content" class="form-container" style="display: none;">
+                        <h2 class="form-title">📅 Register Event</h2>
+                    <form id="club-event-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Event Name</label>
+                                    <input type="text" id="event-name" required class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Event Date</label>
+                                    <input type="date" id="event-date" required class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Event Venue</label>
+                                    <input type="text" id="event-venue" required class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Past Participants</label>
+                                    <input type="number" id="event-participants" required class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Prize Pool</label>
+                                    <input type="text" id="event-prize" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Registration Link</label>
+                                    <input type="url" id="event-reg-link" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Instagram Link</label>
+                                    <input type="url" id="event-insta-link" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Website Link</label>
+                                    <input type="url" id="event-website-link" class="form-input">
+                                </div>
+                                <div class="form-group form-full-width">
+                                    <label class="form-label">Description</label>
+                                    <textarea id="event-desc" class="form-textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="form-btn">Submit Event</button>
+                                <button type="button" id="cancel-event-btn" class="form-btn cancel-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Recruitment Form -->
+                    <div id="recruitment-form-content" class="form-container" style="display: none;">
+                        <h2 class="form-title">👥 Upload Recruitment</h2>
+                        <form id="club-recruitment-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Position</label>
+                                    <input type="text" id="recruitment-position" required class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Pre-requisite Knowledge</label>
+                                    <input type="text" id="recruitment-prereq" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Date to Apply</label>
+                                    <input type="date" id="recruitment-timeline" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Contact Number</label>
+                                    <input type="tel" id="recruitment-contact" placeholder="Enter contact number" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" id="recruitment-email" placeholder="Enter email address" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Registration Link</label>
+                                    <input type="url" id="recruitment-reg-link" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Website Link</label>
+                                    <input type="url" id="recruitment-website-link" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Social Media Link</label>
+                                    <input type="url" id="recruitment-social-link" class="form-input">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="form-btn">Submit Recruitment</button>
+                                <button type="button" id="cancel-recruitment-btn" class="form-btn cancel-btn">Cancel</button>
+                            </div>
+                    </form>
+                    </div>
+                    
+                    <!-- Edit Content Panel -->
+                    <div id="edit-content-panel" class="edit-panel" style="display: none;">
+                        <h2 class="form-title">✏️ Edit Content</h2>
+                        
+                        <div class="edit-tabs">
+                            <button class="edit-tab active" onclick="showEditTab('events')">📅 Events</button>
+                            <button class="edit-tab" onclick="showEditTab('recruitments')">👥 Recruitments</button>
+                        </div>
+                        
+                        <div id="edit-events-content" class="edit-content active">
+                            <div id="events-list">
+                                <!-- Events will be populated here -->
+                </div>
+            </div>
+            
+                        <div id="edit-recruitments-content" class="edit-content">
+                            <div id="recruitments-list">
+                                <!-- Recruitments will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/script.js"></script>
+    <script src="assets/silk-bg.js"></script>
+    <script>
+        // Check if club is logged in
+        const currentClub = JSON.parse(localStorage.getItem('currentClub'));
+        const clubAuth = document.getElementById('club-auth');
+        const clubDashboard = document.getElementById('club-dashboard');
+        
+        if (currentClub) {
+            clubAuth.style.display = 'none';
+            clubDashboard.style.display = 'block';
+            document.getElementById('club-name').textContent = currentClub.name;
+            
+            // Set club color CSS variable
+            document.documentElement.style.setProperty('--club-color', currentClub.color || '#AD49E1');
+        } else {
+            clubAuth.style.display = 'block';
+            clubDashboard.style.display = 'none';
+        }
+        
+        // Panel management
+        function showPanel(panelId) {
+            // Hide all panels
+            document.getElementById('welcome-content').style.display = 'none';
+            document.getElementById('event-form-content').style.display = 'none';
+            document.getElementById('recruitment-form-content').style.display = 'none';
+            document.getElementById('edit-content-panel').style.display = 'none';
+            
+            // Show selected panel
+            if (panelId === 'welcome') {
+                document.getElementById('welcome-content').style.display = 'block';
+            } else if (panelId === 'event-form') {
+                document.getElementById('event-form-content').style.display = 'block';
+            } else if (panelId === 'recruitment-form') {
+                document.getElementById('recruitment-form-content').style.display = 'block';
+            } else if (panelId === 'edit-content') {
+                document.getElementById('edit-content-panel').style.display = 'block';
+                loadEditContent();
+            }
+        }
+        
+        // Event form toggle
+        document.getElementById('register-event-btn').addEventListener('click', () => {
+            showPanel('event-form');
+        });
+        
+        document.getElementById('upload-recruitment-btn').addEventListener('click', () => {
+            showPanel('recruitment-form');
+        });
+        
+        document.getElementById('edit-content-btn').addEventListener('click', () => {
+            showPanel('edit-content');
+        });
+        
+
+        
+        // Logout function for navbar
+        function logout() {
+            localStorage.removeItem('currentClub');
+            window.location.href = 'index.html';
+        }
+        
+        // Cancel buttons
+        document.getElementById('cancel-event-btn').addEventListener('click', () => {
+            showPanel('welcome');
+            document.getElementById('club-event-form').reset();
+        });
+        
+        document.getElementById('cancel-recruitment-btn').addEventListener('click', () => {
+            showPanel('welcome');
+            document.getElementById('club-recruitment-form').reset();
+        });
+        
+        // Edit tab functionality
+        function showEditTab(tabName) {
+            // Hide all edit contents
+            document.querySelectorAll('.edit-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.edit-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById('edit-' + tabName + '-content').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Load edit content
+        function loadEditContent() {
+            loadEvents();
+            loadRecruitments();
+        }
+        
+        // Load club's events
+        function loadEvents() {
+            const eventsList = document.getElementById('events-list');
+            
+            // Get events from global storage only (to prevent duplicates)
+            const allEvents = JSON.parse(localStorage.getItem('all_events') || '[]');
+            
+            // Filter events for this club only
+            const clubEvents = allEvents.filter(e => e.club === currentClub.name);
+            
+            if (clubEvents.length === 0) {
+                eventsList.innerHTML = '<div class="empty-state">No events found. Create your first event!</div>';
+                return;
+            }
+            
+            eventsList.innerHTML = '<div class="edit-items-grid"></div>';
+            const gridContainer = eventsList.querySelector('.edit-items-grid');
+            
+            clubEvents.forEach((event, index) => {
+                const eventDiv = document.createElement('div');
+                eventDiv.className = 'edit-item';
+                eventDiv.style.setProperty('--club-color', currentClub.color || '#AD49E1');
+                eventDiv.innerHTML = `
+                    <div class="edit-item-header">
+                        <div class="edit-item-title">${event.name}</div>
+                        <div class="edit-actions">
+                            <button class="edit-action-btn edit-btn" onclick="editEvent('${event.id || index}')">Edit</button>
+                            <button class="edit-action-btn delete-btn" onclick="deleteEvent('${event.id || index}')">Delete</button>
+                        </div>
+                    </div>
+                    <div class="edit-item-details">
+                        <p><strong>Date:</strong> ${event.date || 'Not specified'}</p>
+                        <p><strong>Venue:</strong> ${event.venue || 'Not specified'}</p>
+                        <p><strong>Participants:</strong> ${event.participants || 'Not specified'}</p>
+                        ${event.prize ? `<p><strong>Prize:</strong> ${event.prize}</p>` : ''}
+                    </div>
+                `;
+                gridContainer.appendChild(eventDiv);
+            });
+        }
+        
+        // Load club's recruitments
+        function loadRecruitments() {
+            const recruitmentsList = document.getElementById('recruitments-list');
+            
+            // Get recruitments from global storage only (to prevent duplicates)
+            const allRecruitments = JSON.parse(localStorage.getItem('all_recruitments') || '[]');
+            
+            // Filter recruitments for this club only
+            const clubRecruitments = allRecruitments.filter(r => r.club === currentClub.name);
+            
+            if (clubRecruitments.length === 0) {
+                recruitmentsList.innerHTML = '<div class="empty-state">No recruitments found. Create your first recruitment!</div>';
+                return;
+            }
+            
+            recruitmentsList.innerHTML = '<div class="edit-items-grid"></div>';
+            const gridContainer = recruitmentsList.querySelector('.edit-items-grid');
+            
+            clubRecruitments.forEach((recruitment, index) => {
+                const recruitmentDiv = document.createElement('div');
+                recruitmentDiv.className = 'edit-item';
+                recruitmentDiv.style.setProperty('--club-color', currentClub.color || '#AD49E1');
+                recruitmentDiv.innerHTML = `
+                    <div class="edit-item-header">
+                        <div class="edit-item-title">${recruitment.position}</div>
+                        <div class="edit-actions">
+                            <button class="edit-action-btn edit-btn" onclick="editRecruitment('${recruitment.id || index}')">Edit</button>
+                            <button class="edit-action-btn delete-btn" onclick="deleteRecruitment('${recruitment.id || index}')">Delete</button>
+                        </div>
+                    </div>
+                    <div class="edit-item-details">
+                        ${recruitment.prereq ? `<p><strong>Prerequisites:</strong> ${recruitment.prereq}</p>` : ''}
+                        ${recruitment.entryTimeline ? `<p><strong>Last Date:</strong> ${recruitment.entryTimeline}</p>` : ''}
+                        ${recruitment.contact ? `<p><strong>Contact:</strong> ${recruitment.contact}</p>` : ''}
+                    </div>
+                `;
+                gridContainer.appendChild(recruitmentDiv);
+            });
+        }
+        
+        // Edit event
+        function editEvent(index) {
+            const event = currentClub.events[index];
+            if (confirm('Edit this event? You will be redirected to the event form.')) {
+                // Store event data for editing
+                localStorage.setItem('editingEvent', JSON.stringify({...event, index}));
+                showPanel('event-form');
+                
+                // Populate form with event data
+                document.getElementById('event-name').value = event.name;
+                document.getElementById('event-date').value = event.date;
+                document.getElementById('event-venue').value = event.venue;
+                document.getElementById('event-participants').value = event.participants;
+                document.getElementById('event-prize').value = event.prize || '';
+                document.getElementById('event-reg-link').value = event.regLink || '';
+                document.getElementById('event-insta-link').value = event.instaLink || '';
+                document.getElementById('event-website-link').value = event.websiteLink || '';
+                document.getElementById('event-desc').value = event.description || '';
+            }
+        }
+        
+        // Delete event
+        function deleteEvent(index) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                const eventToDelete = currentClub.events[index];
+                currentClub.events.splice(index, 1);
+                
+                // Also remove from global events storage
+                const allEvents = JSON.parse(localStorage.getItem('all_events') || '[]');
+                const eventIndex = allEvents.findIndex(e => e.name === eventToDelete.name && e.club === currentClub.name);
+                if (eventIndex !== -1) {
+                    allEvents.splice(eventIndex, 1);
+                    localStorage.setItem('all_events', JSON.stringify(allEvents));
+                }
+                
+                // Update localStorage
+                const clubs = JSON.parse(localStorage.getItem('clubs') || '[]');
+                const clubIndex = clubs.findIndex(c => c.name === currentClub.name);
+                if (clubIndex !== -1) {
+                    clubs[clubIndex] = currentClub;
+                    localStorage.setItem('clubs', JSON.stringify(clubs));
+                }
+                localStorage.setItem('currentClub', JSON.stringify(currentClub));
+                
+                loadEvents();
+                alert('Event deleted successfully!');
+            }
+        }
+        
+        // Edit recruitment
+        function editRecruitment(index) {
+            const recruitment = currentClub.recruitments[index];
+            if (confirm('Edit this recruitment? You will be redirected to the recruitment form.')) {
+                // Store recruitment data for editing
+                localStorage.setItem('editingRecruitment', JSON.stringify({...recruitment, index}));
+                showPanel('recruitment-form');
+                
+                // Populate form with recruitment data
+                document.getElementById('recruitment-position').value = recruitment.position;
+                document.getElementById('recruitment-prereq').value = recruitment.prereq || '';
+                document.getElementById('recruitment-timeline').value = recruitment.entryTimeline || '';
+                document.getElementById('recruitment-contact').value = recruitment.contact || '';
+                document.getElementById('recruitment-email').value = recruitment.email || '';
+                document.getElementById('recruitment-reg-link').value = recruitment.regLink || '';
+                document.getElementById('recruitment-website-link').value = recruitment.websiteLink || '';
+                document.getElementById('recruitment-social-link').value = recruitment.socialLink || '';
+            }
+        }
+        
+        // Delete recruitment
+        function deleteRecruitment(index) {
+            if (confirm('Are you sure you want to delete this recruitment?')) {
+                const recruitmentToDelete = currentClub.recruitments[index];
+                currentClub.recruitments.splice(index, 1);
+                
+                // Also remove from global recruitments storage
+                const allRecruitments = JSON.parse(localStorage.getItem('all_recruitments') || '[]');
+                const recruitmentIndex = allRecruitments.findIndex(r => r.position === recruitmentToDelete.position && r.club === currentClub.name);
+                if (recruitmentIndex !== -1) {
+                    allRecruitments.splice(recruitmentIndex, 1);
+                    localStorage.setItem('all_recruitments', JSON.stringify(allRecruitments));
+                }
+                
+                // Update localStorage
+                const clubs = JSON.parse(localStorage.getItem('clubs') || '[]');
+                const clubIndex = clubs.findIndex(c => c.name === currentClub.name);
+                if (clubIndex !== -1) {
+                    clubs[clubIndex] = currentClub;
+                    localStorage.setItem('clubs', JSON.stringify(clubs));
+                }
+                localStorage.setItem('currentClub', JSON.stringify(currentClub));
+                
+                loadRecruitments();
+                alert('Recruitment deleted successfully!');
+            }
+        }
+        
+        // Event form submission
+        document.getElementById('club-event-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const editingEvent = JSON.parse(localStorage.getItem('editingEvent'));
+            
+            const eventData = {
+                name: document.getElementById('event-name').value,
+                date: document.getElementById('event-date').value,
+                venue: document.getElementById('event-venue').value,
+                participants: document.getElementById('event-participants').value,
+                prize: document.getElementById('event-prize').value,
+                regLink: document.getElementById('event-reg-link').value,
+                instaLink: document.getElementById('event-insta-link').value,
+                websiteLink: document.getElementById('event-website-link').value,
+                desc: document.getElementById('event-desc').value,
+                club: currentClub.name,
+                clubType: currentClub.type,
+                clubColor: currentClub.color
+            };
+            
+            if (editingEvent) {
+                // Update existing event in club's events
+                currentClub.events[editingEvent.index] = eventData;
+                
+                // Update in global events storage
+                const allEvents = JSON.parse(localStorage.getItem('all_events') || '[]');
+                const eventIndex = allEvents.findIndex(e => e.name === editingEvent.name && e.club === currentClub.name);
+                if (eventIndex !== -1) {
+                    allEvents[eventIndex] = eventData;
+                    localStorage.setItem('all_events', JSON.stringify(allEvents));
+                }
+                
+                localStorage.removeItem('editingEvent');
+            } else {
+                // Add new event to club's events
+                if (!currentClub.events) currentClub.events = [];
+                currentClub.events.push(eventData);
+                
+                // Also save to global events storage
+                const allEvents = JSON.parse(localStorage.getItem('all_events') || '[]');
+                allEvents.push(eventData);
+                localStorage.setItem('all_events', JSON.stringify(allEvents));
+            }
+            
+            // Update localStorage
+            const clubs = JSON.parse(localStorage.getItem('clubs') || '[]');
+            const clubIndex = clubs.findIndex(c => c.name === currentClub.name);
+            if (clubIndex !== -1) {
+                clubs[clubIndex] = currentClub;
+                localStorage.setItem('clubs', JSON.stringify(clubs));
+            }
+            localStorage.setItem('currentClub', JSON.stringify(currentClub));
+            
+            alert(editingEvent ? 'Event updated successfully!' : 'Event registered successfully!');
+            document.getElementById('club-event-form').reset();
+            showPanel('welcome');
+        });
+        
+        // Recruitment form submission
+        document.getElementById('club-recruitment-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const editingRecruitment = JSON.parse(localStorage.getItem('editingRecruitment'));
+            
+            const recruitmentData = {
+                position: document.getElementById('recruitment-position').value,
+                prereq: document.getElementById('recruitment-prereq').value,
+                entryTimeline: document.getElementById('recruitment-timeline').value,
+                contact: document.getElementById('recruitment-contact').value,
+                email: document.getElementById('recruitment-email').value,
+                regLink: document.getElementById('recruitment-reg-link').value,
+                websiteLink: document.getElementById('recruitment-website-link').value,
+                socialLink: document.getElementById('recruitment-social-link').value,
+                club: currentClub.name,
+                clubType: currentClub.type,
+                clubColor: currentClub.color
+            };
+            
+            if (editingRecruitment) {
+                // Update existing recruitment in club's recruitments
+                currentClub.recruitments[editingRecruitment.index] = recruitmentData;
+                
+                // Update in global recruitments storage
+                const allRecruitments = JSON.parse(localStorage.getItem('all_recruitments') || '[]');
+                const recruitmentIndex = allRecruitments.findIndex(r => r.position === editingRecruitment.position && r.club === currentClub.name);
+                if (recruitmentIndex !== -1) {
+                    allRecruitments[recruitmentIndex] = recruitmentData;
+                    localStorage.setItem('all_recruitments', JSON.stringify(allRecruitments));
+                }
+                
+                localStorage.removeItem('editingRecruitment');
+            } else {
+                // Add new recruitment to club's recruitments
+                if (!currentClub.recruitments) currentClub.recruitments = [];
+                currentClub.recruitments.push(recruitmentData);
+                
+                // Also save to global recruitments storage
+                const allRecruitments = JSON.parse(localStorage.getItem('all_recruitments') || '[]');
+                allRecruitments.push(recruitmentData);
+                localStorage.setItem('all_recruitments', JSON.stringify(allRecruitments));
+            }
+            
+            // Update localStorage
+            const clubs = JSON.parse(localStorage.getItem('clubs') || '[]');
+            const clubIndex = clubs.findIndex(c => c.name === currentClub.name);
+            if (clubIndex !== -1) {
+                clubs[clubIndex] = currentClub;
+                localStorage.setItem('clubs', JSON.stringify(clubs));
+            }
+            localStorage.setItem('currentClub', JSON.stringify(currentClub));
+            
+            alert(editingRecruitment ? 'Recruitment updated successfully!' : 'Recruitment uploaded successfully!');
+            document.getElementById('club-recruitment-form').reset();
+            showPanel('welcome');
+        });
+    </script>
+    <script src="assets/light-rays-bg.js"></script>
+</body>
+</html> 

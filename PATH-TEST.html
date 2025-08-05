@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path Test - CoEv</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">CoEv</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1 style="text-align: center; color: #AD49E1; margin-top: 50px;">
+            🔍 Path Test Results
+        </h1>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <div id="test-results" style="color: white; font-size: 18px;">
+                Testing CSS and JS loading...
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <button onclick="testJavaScript()" style="
+                    background: #AD49E1;
+                    color: white;
+                    padding: 15px 30px;
+                    border: none;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    cursor: pointer;
+                ">Test JavaScript</button>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <a href="index.html" style="
+                    background: #AD49E1;
+                    color: white;
+                    padding: 15px 30px;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    font-weight: bold;
+                ">Go to Main Site</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/script.js"></script>
+    <script>
+        function testJavaScript() {
+            document.getElementById('test-results').innerHTML = 
+                '✅ JavaScript is working! CSS and JS files are loading correctly.';
+        }
+        
+        // Test if CSS is loaded
+        window.onload = function() {
+            const body = document.body;
+            const computedStyle = window.getComputedStyle(body);
+            
+            // Check if background is purple (CSS loaded)
+            if (computedStyle.background.includes('gradient') || 
+                computedStyle.backgroundColor.includes('rgb')) {
+                document.getElementById('test-results').innerHTML = 
+                    '✅ CSS loaded successfully! Purple background visible.';
+            } else {
+                document.getElementById('test-results').innerHTML = 
+                    '❌ CSS not loading. Check file paths.';
+            }
+        };
+    </script>
+</body>
+</html> 

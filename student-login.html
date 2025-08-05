@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoEv - Student Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .login-header {
+            text-align: center;
+            margin: 40px 0;
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #ff960c;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .auth-card-landscape {
+            background: rgba(235, 211, 248, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(173, 73, 225, 0.2);
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-card-landscape:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(173, 73, 225, 0.4);
+        }
+        
+        .auth-content {
+            text-align: center;
+            width: 100%;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(173, 73, 225, 0.8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background: rgba(173, 73, 225, 1);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .login-header {
+                font-size: 2.5rem;
+            }
+            
+            .auth-card-landscape {
+                padding: 30px 20px;
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">CoEv</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Event Templates</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="recruitments.html">Recruitments</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+        <button id="theme-toggle">🌙</button>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+        
+        <h1 class="login-header">STUDENT LOGIN</h1>
+        
+        <div class="auth-card-landscape">
+            <div class="auth-content">
+                <h2 class="text-center" style="margin-bottom: 30px; color: #AD49E1; font-family: 'Montserrat', sans-serif;">Welcome Back!</h2>
+                
+                <form id="student-login-form">
+                    <input type="email" id="student-login-email" placeholder="Email" required class="input-field"><br>
+                    <input type="password" id="student-login-password" placeholder="Password" required class="input-field"><br>
+                    <button type="submit" class="neu-btn" style="width:100%;margin-top:16px;">Login</button>
+                </form>
+                
+                <div style="margin-top:24px;text-align:center;">
+                    <p style="color: #EBD3F8; margin-bottom: 16px;">Don't have an account?</p>
+                    <a href="student-signup.html" class="neu-btn" style="background:transparent;border:1px solid #AD49E1;color:#AD49E1;text-decoration:none;display:inline-block;">
+                        Create Account
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/script.js"></script>
+    <script>
+        document.getElementById('student-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('student-login-email').value;
+            const password = document.getElementById('student-login-password').value;
+            
+            // Get students from localStorage
+            const students = JSON.parse(localStorage.getItem('students') || '[]');
+            const student = students.find(s => s.email === email && s.password === password);
+            
+            if (student) {
+                // Store current user
+                localStorage.setItem('current_student', JSON.stringify(student));
+                alert('Login successful!');
+                window.location.href = 'student.html';
+            } else {
+                alert('Invalid email or password. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html> 

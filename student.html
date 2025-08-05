@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoEv - Student Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        #light-rays-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .student-header {
+            text-align: center;
+            margin: 10px 0 20px 0;
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ff960c;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .landscape-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .auth-card-landscape {
+            background: rgba(235, 211, 248, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(173, 73, 225, 0.2);
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-card-landscape:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(173, 73, 225, 0.4);
+        }
+        
+        .auth-content {
+            text-align: center;
+            width: 100%;
+        }
+        
+        .certificate-section {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin: 80px 0 60px 0;
+            text-transform: uppercase;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.6),
+                0 0 30px rgba(255, 255, 255, 0.4);
+            background: linear-gradient(45deg, #ffffff, #f0f0f0, #ffffff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: metallic 3s ease-in-out infinite;
+        }
+        
+        @keyframes metallic {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .main-content-container {
+            display: grid;
+            grid-template-columns: 0.4fr 1fr;
+            gap: 40px;
+            align-items: start;
+            margin-top: 40px;
+        }
+        
+        .clubs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+        }
+        
+        .club-box {
+            background: rgba(235, 211, 248, 0.1);
+            border: 3px solid var(--club-color, #AD49E1);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+        }
+        
+        .club-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 0 20px var(--club-color, #AD49E1);
+        }
+        
+        .club-header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--club-color, #AD49E1);
+        }
+        
+        .club-arrow {
+            transition: transform 0.3s ease;
+        }
+        
+        .club-box.active .club-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .events-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .club-box.active .events-dropdown {
+            max-height: 500px;
+        }
+        
+        .events-content {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .events-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        
+        .event-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        
+        .event-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        .upload-btn {
+            background: linear-gradient(0deg, #000000, #3432c7);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 50, 199, 0.4);
+        }
+        
+        .event-history-section {
+            background: rgba(235, 211, 248, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(173, 73, 225, 0.2);
+            padding: 30px;
+            margin: 0;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .event-history-section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(173, 73, 225, 0.4);
+        }
+        
+        .event-history-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #AD49E1;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        
+        .event-history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            padding: 10px;
+        }
+        
+        .event-history-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 3px solid var(--club-color, #AD49E1);
+        }
+        
+        .event-history-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        
+        .event-history-card p {
+            font-family: 'Montserrat', sans-serif;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        
+        .event-history-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .event-history-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .event-history-card p {
+            font-family: 'Montserrat', sans-serif;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        
+        .certificate-status {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .certificate-uploaded {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .certificate-pending {
+            background: #FF9800;
+            color: white;
+        }
+
+        /* Sample data for demonstration */
+        .sample-clubs {
+            margin-top: 20px;
+        }
+        
+        .sample-club {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #AD49E1;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .sample-club-header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #AD49E1;
+        }
+
+        .sample-events-content {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .sample-event-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .sample-event-item:last-child {
+            border-bottom: none;
+        }
+
+        .sample-event-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: #AD49E1;
+            font-weight: 600;
+        }
+
+        .sample-upload-btn {
+            background: linear-gradient(0deg, #000000, #3432c7);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .sample-upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 50, 199, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div id="light-rays-bg"></div>
+    <nav class="navbar">
+        <div class="logo">CoEv</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Event Templates</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="recruitments.html">Recruitments</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <button class="logout-btn" onclick="logout()" style="
+                background: transparent;
+                border: 2px solid #AD49E1;
+                color: #AD49E1;
+                border-radius: 8px;
+                padding: 8px 16px;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 0.9rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            " onmouseover="this.style.background='#AD49E1';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='#AD49E1'">
+                Logout
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Student Authentication Section -->
+        <div id="student-auth" class="landscape-container" style="display: none;">
+            <div class="auth-card-landscape">
+                <div class="auth-content">
+                    <h2 style="margin-bottom: 30px; color: #AD49E1; font-size: 2rem;">Welcome to Student Portal</h2>
+                    <p style="margin-bottom: 30px; color: #666; line-height: 1.6; font-size: 1.1rem;">
+                        Please login to access your certificates and event history.
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center;">
+                        <a href="student-login.html" class="neu-btn" style="
+                            background: linear-gradient(0deg, #000000, #3432c7);
+                            color: #ffffff;
+                            text-decoration: none;
+                            padding: 12px 24px;
+                            font-size: 1.1rem;
+                        ">Login</a>
+                        <a href="student-signup.html" class="neu-btn" style="
+                            background: transparent;
+                            border: 1px solid #AD49E1;
+                            color: #AD49E1;
+                            text-decoration: none;
+                            padding: 12px 24px;
+                            font-size: 1.1rem;
+                        ">Sign Up</a>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Student Dashboard Section -->
+        <div id="student-dashboard" class="landscape-container" style="display: none;">
+            <h1 class="student-header">STUDENT PORTAL</h1>
+            
+            <!-- Certificate Upload Section -->
+            <div class="certificate-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: nowrap; gap: 0;">
+                    <h2 class="section-title" style="margin: 0; white-space: nowrap; font-size: 2.5rem; color: #ff960c; text-shadow: 0 0 10px rgba(255, 150, 12, 0.8), 0 0 20px rgba(255, 150, 12, 0.6), 0 0 30px rgba(255, 150, 12, 0.4); background: linear-gradient(45deg, #ff960c, #ffb347, #ff960c); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: metallic 3s ease-in-out infinite;">UPLOAD CERTIFICATES</h2>
+                    <div class="search-filter-section" style="display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; margin-left: 60px;">
+                        <div class="search-box" style="display: flex; align-items: center; border: 2px solid #AD49E1; border-radius: 6px; background: rgba(255,255,255,0.95);">
+                            <input type="text" id="cert-search" placeholder="Search certificates..." class="search-input" style="border: none; outline: none; background: transparent; padding: 8px 12px; font-size: 1.1rem; font-family: 'Montserrat', sans-serif; color: #333; width: 180px;">
+                            <button class="search-btn" onclick="searchCertificates()" style="background: none; border: none; font-size: 1.3rem; color: #AD49E1; padding: 0 10px; cursor: pointer;">🔍</button>
+                        </div>
+                        <select id="filter-type" class="filter-select" style="padding: 8px 12px; border: 2px solid #AD49E1; border-radius: 6px; font-size: 1.1rem; font-family: 'Montserrat', sans-serif; color: #333; background: rgba(255,255,255,0.95);">
+                            <option value="">All Types</option>
+                            <option value="Technical">Technical</option>
+                            <option value="Non-Technical">Non-Technical</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="main-content-container">
+                    <div class="clubs-container" id="clubsContainer">
+                        <!-- Clubs will be dynamically loaded here -->
+            </div>
+            
+                    <!-- Event History Section -->
+                    <div class="event-history-section">
+                            <h2 class="event-history-title">EVENT HISTORY</h2>
+                            <div id="eventHistoryGrid" class="event-history-grid">
+                                <!-- Event history will be dynamically loaded here -->
+                                </div>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/script.js"></script>
+    <script>
+        // Initialize student certificates data in localStorage if not exists
+        if (!localStorage.getItem('student_certificates')) {
+            localStorage.setItem('student_certificates', JSON.stringify({}));
+        }
+        
+
+
+        // Get events data from localStorage
+        function getEventsData() {
+            const events = JSON.parse(localStorage.getItem('all_events') || '[]');
+            const clubsMap = {};
+            
+            events.forEach(event => {
+                if (!clubsMap[event.club]) {
+                    clubsMap[event.club] = {
+                        name: event.club,
+                        color: event.clubColor,
+                        type: event.clubType,
+                        events: []
+                    };
+                }
+                clubsMap[event.club].events.push({
+                    name: event.name,
+                    id: event.name.toLowerCase().replace(/\s+/g, '_'),
+                    date: event.date,
+                    venue: event.venue
+                });
+            });
+            
+            return Object.values(clubsMap);
+        }
+
+        // Render clubs and events
+        function renderClubs() {
+            const clubsData = getEventsData();
+            const clubsContainer = document.getElementById('clubsContainer');
+            
+            // If no clubs data, keep the sample data
+            if (clubsData.length === 0) {
+                return;
+            }
+            
+            clubsContainer.innerHTML = '';
+
+            clubsData.forEach((club, clubIndex) => {
+                const clubBox = document.createElement('div');
+                clubBox.className = 'club-box glare-hover';
+                clubBox.style.setProperty('--club-color', club.color);
+                clubBox.style.borderColor = club.color;
+                
+                clubBox.innerHTML = `
+                    <div class="club-header" onclick="toggleClub(${clubIndex})" style="color: ${club.color};">
+                        <span style="color: ${club.color}; font-weight: 700;">${club.name}</span>
+                        <span class="club-arrow" style="color: ${club.color};">▼</span>
+                    </div>
+                    <div class="events-dropdown">
+                        <div class="events-content">
+                            <h3 class="events-heading" style="color: ${club.color}; background: rgba(255, 255, 255, 0.95); padding: 10px; border-radius: 8px; margin-bottom: 15px;">EVENT CERTIFICATES</h3>
+                            ${club.events.map(event => `
+                                <div class="event-item">
+                                    <span class="event-name" style="color: ${club.color}; font-weight: 600;">${event.name}</span>
+                                    <button class="upload-btn" onclick="uploadCertificate('${event.id}', '${event.name}')">
+                                        UPLOAD
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                clubsContainer.appendChild(clubBox);
+            });
+        }
+
+        // Toggle club dropdown
+        function toggleClub(clubIndex) {
+            const clubBoxes = document.querySelectorAll('.club-box');
+            const currentBox = clubBoxes[clubIndex];
+            
+            // Close other boxes
+            clubBoxes.forEach((box, index) => {
+                if (index !== clubIndex) {
+                    box.classList.remove('active');
+                }
+            });
+            
+            // Toggle current box
+            currentBox.classList.toggle('active');
+        }
+
+        // Upload certificate function
+        function uploadCertificate(eventId, eventName) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.pdf,.jpg,.jpeg,.png';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Store certificate data
+                    const certificateData = JSON.parse(localStorage.getItem('student_certificates')) || {};
+                    certificateData[eventId] = {
+                        name: eventName,
+                        fileName: file.name,
+                        uploadDate: new Date().toISOString(),
+                        fileSize: file.size
+                    };
+                    localStorage.setItem('student_certificates', JSON.stringify(certificateData));
+                    
+                    alert('Certificate uploaded successfully!');
+                    renderEventHistory();
+                }
+            };
+            
+            input.click();
+        }
+
+        // Render event history
+        function renderEventHistory() {
+            const certificateData = JSON.parse(localStorage.getItem('student_certificates')) || {};
+            const eventHistoryGrid = document.getElementById('eventHistoryGrid');
+            
+            if (Object.keys(certificateData).length === 0) {
+                eventHistoryGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
+                        No events attended yet. Upload certificates to see your event history.
+                    </div>
+                `;
+                return;
+            }
+            
+            eventHistoryGrid.innerHTML = '';
+            
+            Object.entries(certificateData).forEach(([eventId, data]) => {
+                // Get club color from events data
+                const allEvents = JSON.parse(localStorage.getItem('all_events') || '[]');
+                const event = allEvents.find(e => e.name === data.name);
+                const clubColor = event ? event.clubColor : '#AD49E1';
+                const clubName = event ? event.club : 'Unknown Club';
+                
+                const card = document.createElement('div');
+                card.className = 'event-history-card';
+                card.style.setProperty('--club-color', clubColor);
+                                card.innerHTML = `
+                    <h4 style="color: ${clubColor}; font-weight: 700;">${data.name}</h4>
+                    <p style="color: ${clubColor}; font-weight: 600;"><strong>Club:</strong> ${clubName}</p>
+                    <p><strong>Event Date:</strong> ${event ? event.date : 'TBD'}</p>
+                    <p><strong>Uploaded:</strong> ${new Date(data.uploadDate).toLocaleDateString()}</p>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <span class="certificate-status certificate-uploaded">✓ Uploaded</span>
+                        <button class="download-btn" onclick="downloadCertificate('${eventId}', '${data.fileName}')" style="
+                            background: ${clubColor};
+                            color: white;
+                            border: none;
+                            border-radius: 6px;
+                            padding: 5px 10px;
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 0.75rem;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow='none'">
+                            DOWNLOAD
+                    </button>
+                </div>
+                `;
+                eventHistoryGrid.appendChild(card);
+            });
+        }
+
+        // Check if student is logged in
+        const currentStudent = JSON.parse(localStorage.getItem('current_student'));
+        const studentAuth = document.getElementById('student-auth');
+        const studentDashboard = document.getElementById('student-dashboard');
+        
+        console.log('Current student:', currentStudent);
+        
+        if (currentStudent) {
+            console.log('Student is logged in, showing dashboard');
+            studentAuth.style.display = 'none';
+            studentDashboard.style.display = 'block';
+            renderClubs();
+            renderEventHistory();
+        } else {
+            console.log('No student logged in, showing auth');
+            studentAuth.style.display = 'block';
+            studentDashboard.style.display = 'none';
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('current_student');
+            window.location.href = 'index.html';
+        }
+
+        // Download certificate function
+        function downloadCertificate(eventId, fileName) {
+            const certificateData = JSON.parse(localStorage.getItem('student_certificates')) || {};
+            const certificate = certificateData[eventId];
+            
+            if (certificate) {
+                // Create a dummy file for download (since we don't store actual file data)
+                const blob = new Blob(['Certificate for ' + certificate.name], { type: 'text/plain' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName || 'certificate.txt';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                alert('Certificate download started!');
+            } else {
+                alert('Certificate not found!');
+            }
+        }
+        
+        // New certificate search and filter functions
+        function searchCertificates() {
+            const searchTerm = document.getElementById('cert-search').value.toLowerCase();
+            
+            // Filter club boxes
+            const clubBoxes = document.querySelectorAll('.club-box, .sample-club');
+            clubBoxes.forEach(box => {
+                const clubName = box.querySelector('.club-header span, .sample-club-header span').textContent.toLowerCase();
+                const eventItems = box.querySelectorAll('.event-item, .sample-event-item');
+                let hasMatch = false;
+                
+                // Check if club name matches
+                if (clubName.includes(searchTerm)) {
+                    hasMatch = true;
+                }
+                
+                // Check if any event names match
+                eventItems.forEach(item => {
+                    const eventName = item.querySelector('.event-name, .sample-event-name').textContent.toLowerCase();
+                    if (eventName.includes(searchTerm)) {
+                        hasMatch = true;
+                    }
+                });
+                
+                box.style.display = hasMatch ? 'block' : 'none';
+            });
+            
+            // Filter event history cards
+            const eventCards = document.querySelectorAll('.event-history-card');
+            eventCards.forEach(card => {
+                const eventName = card.querySelector('h4').textContent.toLowerCase();
+                const clubName = card.querySelector('p').textContent.toLowerCase();
+                
+                if (eventName.includes(searchTerm) || clubName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        document.getElementById('cert-search').addEventListener('input', searchCertificates);
+        document.getElementById('filter-type').addEventListener('change', function() {
+            const value = this.value.toLowerCase();
+            
+            // Filter club boxes
+            const clubBoxes = document.querySelectorAll('.club-box, .sample-club');
+            clubBoxes.forEach(box => {
+                const type = (box.getAttribute('data-type') || '').toLowerCase();
+                if (!value || type === value) {
+                    box.style.display = 'block';
+                } else {
+                    box.style.display = 'none';
+                }
+            });
+            
+            // Filter event history cards
+            const eventCards = document.querySelectorAll('.event-history-card');
+            eventCards.forEach(card => {
+                const clubName = card.querySelector('p').textContent.toLowerCase();
+                let show = true;
+                
+                if (value === 'technical') {
+                    // Check if it's a technical club (you can customize this logic)
+                    const technicalClubs = ['tech club', 'coding club', 'hackathon'];
+                    show = technicalClubs.some(club => clubName.includes(club));
+                } else if (value === 'non-technical') {
+                    // Check if it's a non-technical club
+                    const nonTechnicalClubs = ['cultural club', 'sports club', 'dance club', 'music club'];
+                    show = nonTechnicalClubs.some(club => clubName.includes(club));
+                }
+                
+                card.style.display = show ? 'block' : 'none';
+            });
+        });
+    </script>
+    <script src="assets/light-rays-bg.js"></script>
+</body>
+</html> 
