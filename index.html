@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoEv - Luxury College Events Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Canva+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Northwestern:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Horizon:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=HK+MODULAR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">CoEv</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Event Templates</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="recruitments.html">Recruitments</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <!-- Removed theme toggle button -->
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+     
+    <div class="container" style="
+        min-height: 100vh;
+        overflow-y: auto;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+    ">
+        <!-- Main Heading Section -->
+        <section id="intro-section" class="text-center" style="
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            width: 100%;
+            position: relative;
+        ">
+            
+            <div style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                max-width: 1400px;
+                position: relative;
+                z-index: 2;
+            ">
+                <!-- Left side - Text content -->
+                <div style="
+                    flex: 1;
+                    text-align: left;
+                    padding-right: 60px;
+                    padding-left: 80px;
+                ">
+                    <!-- Top Text: FROM SIGN-UP TO SHOW-UP -->
+                    <div style="margin-bottom: 70px;">
+                        <h1 style="
+                            font-family: 'Horizon', 'Inter', sans-serif;
+                            font-size: 4.5rem;
+                            font-weight: 800;
+                            text-transform: uppercase;
+                            color: #3a006a;
+                            line-height: 0.8;
+                            margin-bottom: -10px;
+                            animation: textSlideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                            opacity: 0;
+                        ">
+                            FROM SIGN-UP
+                        </h1>
+                        <h1 style="
+                            font-family: 'Horizon', 'Inter', sans-serif;
+                            font-size: 4.5rem;
+                            font-weight: 800;
+                            text-transform: uppercase;
+                            color: #3a006a;
+                            line-height: 0.8;
+                            animation: textSlideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                            animation-delay: 0.2s;
+                            opacity: 0;
+                        ">
+                            TO SHOW-UP
+                        </h1>
+                    </div>
+                    
+                    <!-- Second Block: THE CLUB LIFE SIMPLIFIED -->
+                    <div style="margin-bottom: 60px;">
+                        <h2 style="
+                            font-family: 'Orbitron', 'Inter', sans-serif;
+                            font-size: 2.8rem;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                            color: #e6f3ff;
+                            animation: textSlideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                            animation-delay: 0.4s;
+                            opacity: 0;
+                            line-height: 0.9;
+                            margin-bottom: -5px;
+                            text-align: left;
+                        ">
+                            THE CLUB LIFE
+                        </h2>
+                        <h2 style="
+                            font-family: 'Orbitron', 'Inter', sans-serif;
+                            font-size: 2.8rem;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                            color: #e6f3ff;
+                            animation: textSlideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                            animation-delay: 0.5s;
+                            opacity: 0;
+                            line-height: 0.9;
+                            text-align: left;
+                        ">
+                            SIMPLIFIED
+                        </h2>
+                    </div>
+                    
+                    <!-- Final Subheading -->
+                    <div style="
+                        animation: textSlideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                        animation-delay: 0.6s;
+                        opacity: 0;
+                    ">
+                        <div id="typing-text" style="
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 1.6rem;
+                            font-weight: 600;
+                            color: #e6e6ff;
+                            line-height: 1.3;
+                        "></div>
+                    </div>
+                </div>
+                
+                <!-- Right side - Portal cards -->
+                <div style="
+                    display: flex;
+                    gap: 32px;
+                    align-items: center;
+                    margin-left: 20px;
+                    margin-right: 40px;
+                ">
+                    <!-- Student Portal Card -->
+                    <div class="portal-card" onclick="window.location.href='student.html'" style="
+                        background: linear-gradient(90deg, #5c6ff4, #e870c2);
+                        border-radius: 20px;
+                        padding: 32px;
+                        width: 220px;
+                        height: 320px;
+                        cursor: pointer;
+                        position: relative;
+                        overflow: hidden;
+                        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        animation: cardSlideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                        animation-delay: 0.8s;
+                        opacity: 0;
+                    ">
+                        <div>
+                            <h3 style="
+                                font-family: 'Horizon', 'Montserrat', sans-serif;
+                                font-size: 2.2rem;
+                                font-weight: 700;
+                                color: #e6f3ff;
+                                margin-bottom: 16px;
+                                text-transform: uppercase;
+                                text-align: center;
+                                margin-top: -8px;
+                            ">
+                                STUDENT PORTAL
+                            </h3>
+                            <p style="
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 1rem;
+                                color: #ffffff;
+                                margin-bottom: 24px;
+                                opacity: 0.9;
+                                line-height: 1.5;
+                            ">
+                                Stay connected with your clubs & access all your certificates in one place.
+                            </p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <button class="portal-btn" onclick="event.stopPropagation(); window.location.href='student-login.html'" style="
+                                background: linear-gradient(0deg, #000000, #3432c7);
+                                color: #ffffff;
+                                border: none;
+                                border-radius: 8px;
+                                padding: 10px 16px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 0.9rem;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                position: relative;
+                                overflow: hidden;
+                            " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(52, 50, 199, 0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='none'">
+                                LOG IN
+                            </button>
+                            <button class="portal-btn" onclick="event.stopPropagation(); window.location.href='student-signup.html'" style="
+                                background: linear-gradient(0deg, #000000, #3432c7);
+                                color: #ffffff;
+                                border: none;
+                                border-radius: 8px;
+                                padding: 10px 16px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 0.9rem;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                position: relative;
+                                overflow: hidden;
+                            " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(52, 50, 199, 0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='none'">
+                                SIGN UP
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Club Portal Card -->
+                    <div class="portal-card" onclick="window.location.href='club.html'" style="
+                        background: linear-gradient(90deg, #5c6ff4, #e870c2);
+                        border-radius: 20px;
+                        padding: 32px;
+                        width: 220px;
+                        height: 320px;
+                        cursor: pointer;
+                        position: relative;
+                        overflow: hidden;
+                        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        animation: cardSlideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                        animation-delay: 1.0s;
+                        opacity: 0;
+                    ">
+                        <div>
+                            <h3 style="
+                                font-family: 'Horizon', 'Montserrat', sans-serif;
+                                font-size: 2.2rem;
+                                font-weight: 700;
+                                color: #e6f3ff;
+                                margin-bottom: 16px;
+                                text-transform: uppercase;
+                                text-align: center;
+                                margin-top: -8px;
+                            ">
+                                CLUB PORTAL
+                            </h3>
+                            <p style="
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 1rem;
+                                color: #ffffff;
+                                margin-bottom: 24px;
+                                opacity: 0.9;
+                                line-height: 1.5;
+                            ">
+                                Register events & showcase your club at best.
+                            </p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <button class="portal-btn" onclick="event.stopPropagation(); window.location.href='club-login.html'" style="
+                                background: linear-gradient(0deg, #000000, #3432c7);
+                                color: #ffffff;
+                                border: none;
+                                border-radius: 8px;
+                                padding: 10px 16px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 0.9rem;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                position: relative;
+                                overflow: hidden;
+                            " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(52, 50, 199, 0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='none'">
+                                LOG IN
+                            </button>
+                            <button class="portal-btn" onclick="event.stopPropagation(); window.location.href='club-signup.html'" style="
+                                background: linear-gradient(0deg, #000000, #3432c7);
+                                color: #ffffff;
+                                border: none;
+                                border-radius: 8px;
+                                padding: 10px 16px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 0.9rem;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                position: relative;
+                                overflow: hidden;
+                            " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(52, 50, 199, 0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='none'">
+                                SIGN UP
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        
+        <!-- Notice Board Section -->
+        <section id="notice-section" class="scroll-reveal" data-delay="1.8" style="
+            display: none;
+            padding: 80px 20px;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        ">
+            <div class="glass-card text-center" style="
+                backdrop-filter: blur(16px);
+                background: rgba(235, 211, 248, 0.1);
+                border: 1.5px solid rgba(173, 73, 225, 0.2);
+                border-radius: 20px;
+                padding: 32px;
+                animation: slideUpFromBottom 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                opacity: 0;
+                transform: translateY(100px);
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+            ">
+                <h2 style="
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 2.2rem;
+                    font-weight: 700;
+                    margin-bottom: 32px;
+                    color: #AD49E1;
+                ">
+                    Upcoming Events
+                </h2>
+                <div id="notice-board" style="
+                    display: flex;
+                    flex-direction: row;
+                    gap: 24px;
+                    overflow-x: auto;
+                    padding: 16px 0;
+                    justify-content: flex-start;
+                ">
+                    <!-- Events will be dynamically populated by JavaScript -->
+                    <div style="
+                        text-align: center;
+                        padding: 40px;
+                        color: #EBD3F8;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 1.2rem;
+                        opacity: 0.8;
+                    ">
+                        Loading upcoming events...
+                </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact-section" class="fade-up" data-delay="2.4" style="
+            display: none;
+            padding: 80px 20px;
+            min-height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        ">
+            <div class="glass-card" style="
+                width: 100%;
+                max-width: none;
+                margin: 0;
+                border-radius: 0;
+                background: rgba(235, 211, 248, 0.1);
+                backdrop-filter: blur(16px);
+                border: 1.5px solid rgba(173, 73, 225, 0.2);
+                padding: 40px;
+            ">
+                <h2 style="
+                    text-align: center;
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 2.5rem;
+                    font-weight: 700;
+                    margin-bottom: 32px;
+                    color: #AD49E1;
+                ">
+                    📞 Contact Us
+                </h2>
+                <div style="
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 32px;
+                    margin-bottom: 32px;
+                ">
+                    <div style="text-align: center;">
+                        <h4 style="
+                            color: #AD49E1;
+                            margin-bottom: 8px;
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 1.2rem;
+                            font-weight: 600;
+                        ">
+                            Phone
+                        </h4>
+                        <p style="
+                            font-size: 1.3rem;
+                            font-family: 'Montserrat', sans-serif;
+                            color: #EBD3F8;
+                        ">
+                            9448463074
+                        </p>
+                    </div>
+                    <div style="text-align: center;">
+                        <h4 style="
+                            color: #AD49E1;
+                            margin-bottom: 8px;
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 1.2rem;
+                            font-weight: 600;
+                        ">
+                            Email
+                        </h4>
+                        <p style="
+                            font-size: 1.3rem;
+                            font-family: 'Montserrat', sans-serif;
+                            color: #EBD3F8;
+                        ">
+                            msrakshith.0506@gmail.com
+                        </p>
+                    </div>
+                </div>
+                <div style="
+                    display: flex;
+                    justify-content: center;
+                    gap: 32px;
+                    flex-wrap: wrap;
+                    margin-bottom: 24px;
+                ">
+                    <a href="events.html" style="
+                        color: #AD49E1;
+                        text-decoration: none;
+                        opacity: 0.8;
+                        transition: opacity 0.3s;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 1.1rem;
+                        font-weight: 500;
+                    " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                        Events
+                    </a>
+                    <a href="calendar.html" style="
+                        color: #AD49E1;
+                        text-decoration: none;
+                        opacity: 0.8;
+                        transition: opacity 0.3s;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 1.1rem;
+                        font-weight: 500;
+                    " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                        Calendar
+                    </a>
+                    <a href="recruitments.html" style="
+                        color: #AD49E1;
+                        text-decoration: none;
+                        opacity: 0.8;
+                        transition: opacity 0.3s;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 1.1rem;
+                        font-weight: 500;
+                    " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                        Recruitments
+                    </a>
+                    <a href="feedback.html" style="
+                        color: #AD49E1;
+                        text-decoration: none;
+                        opacity: 0.8;
+                        transition: opacity 0.3s;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 1.1rem;
+                        font-weight: 500;
+                    " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                        Feedback
+                    </a>
+                </div>
+                <p style="
+                    margin-top: 24px;
+                    opacity: 0.8;
+                    text-align: center;
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 1.1rem;
+                ">
+                    For queries, suggestions, or support, reach out anytime!
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Floating Background Icons -->
+    <div id="floating-icons" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:hidden;">
+        <div style="position:absolute;top:10%;left:10%;font-size:2rem;opacity:0.1;animation:float 6s ease-in-out infinite;">📷</div>
+        <div style="position:absolute;top:20%;right:15%;font-size:1.5rem;opacity:0.1;animation:float 8s ease-in-out infinite 1s;">🎭</div>
+        <div style="position:absolute;top:60%;left:5%;font-size:2.5rem;opacity:0.1;animation:float 7s ease-in-out infinite 2s;">🎵</div>
+        <div style="position:absolute;top:40%;right:5%;font-size:1.8rem;opacity:0.1;animation:float 9s ease-in-out infinite 3s;">🎤</div>
+        <div style="position:absolute;top:80%;left:20%;font-size:2.2rem;opacity:0.1;animation:float 5s ease-in-out infinite 4s;">🎪</div>
+        <div style="position:absolute;top:30%;left:80%;font-size:1.6rem;opacity:0.1;animation:float 10s ease-in-out infinite 5s;">🎨</div>
+    </div>
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(-3deg); }
+            75% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes coevPopInAndFade {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(-50px);
+            }
+            30% {
+                opacity: 1;
+                transform: scale(1.1) translateY(10px);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+        }
+        
+        @keyframes slideUpFromBottom {
+            0% {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes textSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes cardSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(50px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+        
+        #floating-icons div:hover {
+            opacity: 0.3 !important;
+            transform: scale(1.2);
+        }
+        
+        .glass-card {
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(173, 73, 225, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(173, 73, 225, 0.4);
+        }
+        
+        .neu-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .neu-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .neu-btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Portal Card Styles */
+        .portal-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s ease;
+            z-index: 1;
+        }
+        
+        .portal-card:hover::before {
+            left: 100%;
+        }
+        
+        .portal-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Portal Button Styles */
+        .portal-btn {
+            background: linear-gradient(0deg, #000000, #3432c7);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .portal-btn:hover::before {
+            left: 100%;
+        }
+        
+        .portal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(52, 50, 199, 0.5);
+        }
+        
+        /* Event Bar Styles */
+        .event-bar {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .event-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(173, 73, 225, 0.8), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .event-bar:hover::after {
+            left: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .flex {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            #floating-icons {
+                display: none;
+            }
+            
+            .portal-card {
+                width: 280px !important;
+                margin: 16px auto;
+            }
+        }
+    </style>
+
+    <script src="assets/script.js"></script>
+    <script src="assets/text-type.js"></script>
+    <script>
+        // Initialize text typing effect after page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for the animation to start
+            setTimeout(() => {
+                const typingElement = document.getElementById('typing-text');
+                if (typingElement) {
+                    new TextType(typingElement, {
+                        text: "CoEv bridges the gap between students and clubs – discover events, register, apply for recruitments, and manage all your certificates in one place.",
+                        typingSpeed: 30,
+                        pauseDuration: 3000,
+                        showCursor: true,
+                        cursorCharacter: "|",
+                        loop: false, // Only run once
+                        initialDelay: 1000
+                    });
+                }
+            }, 2000); // Wait 2 seconds for the slide-in animation
+        });
+    </script>
+</body>
+</html> 

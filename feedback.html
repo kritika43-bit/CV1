@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoEv - Event Feedback</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        /* Custom styles for the new feedback layout */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+        
+        .feedback-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            margin-top: 0;
+        }
+        
+        .clubs-section {
+            /* Clubs section closer to left margin */
+            margin-top: 20px;
+            max-width: 500px;
+            margin-left: 0;
+            margin-right: auto;
+        }
+        
+        .content-section {
+            /* Right side - Form or Feedback */
+            min-height: 700px;
+            margin-left: 0;
+            max-width: 800px;
+        }
+        
+        .club-box {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .club-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .club-header {
+            padding: 15px 20px;
+            font-family: 'Orbitron', monospace;
+            font-size: 20px;
+            font-weight: 900;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .club-arrow {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .club-box.active .club-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .events-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: white;
+        }
+        
+        .club-box.active .events-dropdown {
+            max-height: 1000px;
+        }
+        
+        .events-content {
+            padding: 25px;
+        }
+        
+        .events-heading {
+            text-align: center;
+            font-family: 'Orbitron', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .event-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+        }
+        
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        
+        .event-name {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .event-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .feedback-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .feedback-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .see-feedback-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        /* Right side content styles */
+        .content-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-height: 700px;
+            width: 100%;
+        }
+        
+        .content-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .content-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1800ad;
+            margin-bottom: 10px;
+        }
+        
+        .content-subtitle {
+            color: #666;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* Feedback Form Styles */
+        .form-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #1800ad;
+            padding-bottom: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #1800ad;
+        }
+        
+        .rating-section {
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .rating-section:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .rating-question {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .rating-stars {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 20px;
+        }
+        
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px;
+            border-radius: 50%;
+        }
+        
+        .star-btn:hover {
+            color: #ffd700;
+            transform: scale(1.2);
+        }
+        
+        .star-btn.active {
+            color: #ffd700;
+        }
+        
+        .file-upload {
+            border: 2px dashed #1800ad;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+        
+        .file-upload:hover {
+            background: #f8f9ff;
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #1800ad 0%, #4a00e0 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(24, 0, 173, 0.3);
+        }
+        
+        /* See Feedback Styles */
+        .feedback-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .feedback-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+        
+        .student-info {
+            font-family: 'Montserrat', sans-serif;
+            flex: 1;
+        }
+        
+        .student-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .student-usn {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .feedback-suggestions {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(248, 249, 250, 0.8);
+            border-radius: 8px;
+            border-left: 4px solid #1800ad;
+        }
+        
+        .suggestions-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .average-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .rating-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .certificate-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .certificate-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+        
+        /* Certificate Modal */
+        .certificate-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .certificate-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .certificate-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .certificate-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .certificate-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .certificate-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .certificate-pdf {
+            width: 100%;
+            height: 80vh;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .no-feedback {
+            text-align: center;
+            color: #666;
+            font-family: 'Montserrat', sans-serif;
+            padding: 40px;
+        }
+        
+        @media (max-width: 1024px) {
+            .feedback-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .clubs-section {
+                order: 1;
+            }
+            
+            .content-section {
+                order: 2;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .feedback-header {
+                font-size: 2rem;
+            }
+            
+            .club-header {
+                font-size: 20px;
+                padding: 15px 20px;
+            }
+            
+            .event-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .event-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .feedback-btn {
+                flex: 1;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">CoEv</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Event Templates</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="recruitments.html">Recruitments</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <!-- Removed theme toggle button -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Remove the feedback header -->
+
+        <!-- Move the clubs section closer to left margin -->
+        <div class="clubs-section" style="margin-bottom: 40px; margin-left: 20px;">
+            <div id="clubsContainer">
+                <!-- Clubs will be dynamically generated here -->
+            </div>
+        </div>
+
+        <!-- Content section moved to the right -->
+        <div class="feedback-container" style="grid-template-columns: 1fr; margin-left: 20px;">
+            <!-- Right side - Content (Form or Feedback) -->
+            <div class="content-section">
+                <div class="content-box" id="contentBox">
+                    <div class="content-header">
+                        <h2 class="content-title">SELECT A CLUB AND EVENT</h2>
+                        <p class="content-subtitle">Choose an event to give feedback or view existing feedback</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+            
+    <!-- Certificate Modal -->
+    <div class="certificate-modal" id="certificateModal">
+        <div class="certificate-container">
+            <button class="certificate-close" onclick="closeCertificateModal()">&times;</button>
+            <div class="certificate-content" id="certificateContent">
+                <!-- Certificate content will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/script.js"></script>
+    <script>
+        // Initialize feedback data in localStorage if not exists
+        if (!localStorage.getItem('event_feedback')) {
+            localStorage.setItem('event_feedback', JSON.stringify({}));
+        }
+
+        // Get events data from localStorage
+        function getEventsData() {
+            const events = JSON.parse(localStorage.getItem('all_events') || '[]');
+            const clubsMap = {};
+            
+            events.forEach(event => {
+                if (!clubsMap[event.club]) {
+                    clubsMap[event.club] = {
+                        name: event.club,
+                        color: event.clubColor,
+                        type: event.clubType,
+                        events: []
+                    };
+                }
+                clubsMap[event.club].events.push({
+                    name: event.name,
+                    id: event.name.toLowerCase().replace(/\s+/g, '_'),
+                    date: event.date,
+                    venue: event.venue
+                });
+            });
+            
+            return Object.values(clubsMap);
+        }
+
+        // Render clubs and events
+        function renderClubs() {
+            const clubsData = getEventsData();
+            const container = document.getElementById('clubsContainer');
+            container.innerHTML = '';
+
+            clubsData.forEach((club, clubIndex) => {
+                const clubBox = document.createElement('div');
+                clubBox.className = 'club-box glare-hover';
+                clubBox.style.borderColor = club.color;
+                
+                clubBox.innerHTML = `
+                    <div class="club-header" onclick="toggleClub(${clubIndex})" style="color: ${club.color};">
+                        <span>${club.name}</span>
+                        <span class="club-arrow">▼</span>
+                    </div>
+                    <div class="events-dropdown">
+                        <div class="events-content">
+                            <h3 class="events-heading" style="color: ${club.color};">EVENT FEEDBACK</h3>
+                            ${club.events.map(event => `
+                                <div class="event-item">
+                                    <span class="event-name" style="color: ${club.color}; font-weight: 600;">${event.name}</span>
+                                    <div class="event-buttons">
+                                        <button class="feedback-btn" onclick="openFeedbackForm('${event.id}', '${event.name}')">
+                                            GIVE FEEDBACK
+                                        </button>
+                                        <button class="feedback-btn see-feedback-btn" onclick="openSeeFeedback('${event.id}', '${event.name}')">
+                                            SEE FEEDBACK
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(clubBox);
+            });
+        }
+
+        // Toggle club dropdown
+        function toggleClub(clubIndex) {
+            const clubBoxes = document.querySelectorAll('.club-box');
+            const currentBox = clubBoxes[clubIndex];
+            
+            // Close all other clubs
+            clubBoxes.forEach((box, index) => {
+                if (index !== clubIndex) {
+                    box.classList.remove('active');
+                }
+            });
+            
+            // Toggle current club
+            currentBox.classList.toggle('active');
+        }
+
+        // Open feedback form in right panel
+        function openFeedbackForm(eventId, eventName) {
+            const contentBox = document.getElementById('contentBox');
+            
+            contentBox.innerHTML = `
+                <div class="content-header">
+                    <h2 class="content-title">EVENT FEEDBACK FORM</h2>
+                    <p class="content-subtitle">${eventName}</p>
+                </div>
+                
+                <form id="feedbackForm" data-event-id="${eventId}">
+                    <!-- Personal Info Section -->
+                    <div class="form-section">
+                        <h3 class="section-title">Personal Information</h3>
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">USN</label>
+                            <input type="text" class="form-input" name="usn" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Academic Year</label>
+                            <select class="form-input" name="academicYear" required>
+                                <option value="">Select Academic Year</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Event Info Section -->
+                    <div class="form-section">
+                        <h3 class="section-title">Event Information</h3>
+                        
+                        <div class="rating-section">
+                            <div class="rating-question">
+                                <span>1. Rate the overall event.</span>
+                            <div class="rating-stars" data-question="overall">
+                                <button type="button" class="star-btn" data-rating="1">★</button>
+                                <button type="button" class="star-btn" data-rating="2">★</button>
+                                <button type="button" class="star-btn" data-rating="3">★</button>
+                                <button type="button" class="star-btn" data-rating="4">★</button>
+                                <button type="button" class="star-btn" data-rating="5">★</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rating-section">
+                            <div class="rating-question">
+                                <span>2. Was the event enjoyable and engaging?</span>
+                            <div class="rating-stars" data-question="enjoyable">
+                                <button type="button" class="star-btn" data-rating="1">★</button>
+                                <button type="button" class="star-btn" data-rating="2">★</button>
+                                <button type="button" class="star-btn" data-rating="3">★</button>
+                                <button type="button" class="star-btn" data-rating="4">★</button>
+                                <button type="button" class="star-btn" data-rating="5">★</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rating-section">
+                            <div class="rating-question">
+                                <span>3. Was the flow and pace of the event satisfactory?</span>
+                            <div class="rating-stars" data-question="flow">
+                                <button type="button" class="star-btn" data-rating="1">★</button>
+                                <button type="button" class="star-btn" data-rating="2">★</button>
+                                <button type="button" class="star-btn" data-rating="3">★</button>
+                                <button type="button" class="star-btn" data-rating="4">★</button>
+                                <button type="button" class="star-btn" data-rating="5">★</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rating-section">
+                            <div class="rating-question">
+                                <span>4. Did it meet your expectations?</span>
+                            <div class="rating-stars" data-question="expectations">
+                                <button type="button" class="star-btn" data-rating="1">★</button>
+                                <button type="button" class="star-btn" data-rating="2">★</button>
+                                <button type="button" class="star-btn" data-rating="3">★</button>
+                                <button type="button" class="star-btn" data-rating="4">★</button>
+                                <button type="button" class="star-btn" data-rating="5">★</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rating-section">
+                            <div class="rating-question">
+                                <span>5. Was it aligned to the main objective?</span>
+                            <div class="rating-stars" data-question="objective">
+                                <button type="button" class="star-btn" data-rating="1">★</button>
+                                <button type="button" class="star-btn" data-rating="2">★</button>
+                                <button type="button" class="star-btn" data-rating="3">★</button>
+                                <button type="button" class="star-btn" data-rating="4">★</button>
+                                <button type="button" class="star-btn" data-rating="5">★</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Suggestions and overall thoughts</label>
+                            <textarea class="form-input" name="suggestions" rows="4" placeholder="Please share your suggestions and overall thoughts about the event..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Upload Participation Certificate</label>
+                            <div class="file-upload" onclick="document.getElementById('certificateFile').click()">
+                                <input type="file" id="certificateFile" name="certificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                                <p style="margin: 0; color: #333;">Click to upload your participation certificate</p>
+                                <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Supports PDF, JPG, JPEG, PNG</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Submit Feedback</button>
+                </form>
+            `;
+            
+            // Add event listeners for the form
+            setupFormEventListeners();
+        }
+
+        // Open see feedback in right panel
+        function openSeeFeedback(eventId, eventName) {
+            const contentBox = document.getElementById('contentBox');
+            
+            contentBox.innerHTML = `
+                <div class="content-header">
+                    <h2 class="content-title">EVENT FEEDBACK LIST</h2>
+                    <p class="content-subtitle">${eventName}</p>
+                </div>
+                
+                <div id="feedbackList">
+                    <!-- Feedback items will be dynamically generated -->
+                </div>
+            `;
+            
+            renderFeedbackList(eventId);
+        }
+
+        // Render feedback list
+        function renderFeedbackList(eventId) {
+            const feedbackData = JSON.parse(localStorage.getItem('event_feedback')) || {};
+            const eventFeedback = feedbackData[eventId] || [];
+            const feedbackList = document.getElementById('feedbackList');
+            
+            if (eventFeedback.length === 0) {
+                feedbackList.innerHTML = '<div class="no-feedback">No feedback submitted yet for this event.</div>';
+                return;
+            }
+            
+            feedbackList.innerHTML = eventFeedback.map((feedback, index) => {
+                const averageRating = Math.round(
+                    (feedback.overall + feedback.enjoyable + feedback.flow + feedback.expectations + feedback.objective) / 5
+                );
+                
+                return `
+                    <div class="feedback-item">
+                        <div class="feedback-header-info">
+                            <div class="student-info">
+                                <div class="student-name">${feedback.name}</div>
+                                <div class="student-usn">${feedback.usn}</div>
+                                <div class="feedback-suggestions">
+                                    <span class="suggestions-label">Suggestions & Thoughts:</span>
+                                    ${feedback.suggestions || 'No suggestions provided.'}
+                                </div>
+                            </div>
+                            <div class="average-rating">
+                                <span class="rating-text">Average Rating:</span>
+                                <span style="color: #ffd700; font-size: 18px;">${'★'.repeat(averageRating)}${'☆'.repeat(5 - averageRating)}</span>
+                            </div>
+                            <button class="certificate-btn" onclick="viewCertificate('${feedback.certificateUrl}', '${feedback.name}')">
+                                VIEW CERTIFICATE
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // View certificate in modal
+        function viewCertificate(certificateUrl, studentName) {
+            if (!certificateUrl) {
+                alert('Certificate not available');
+                return;
+            }
+            
+            const modal = document.getElementById('certificateModal');
+            const content = document.getElementById('certificateContent');
+            
+            // Determine file type and display accordingly
+            if (certificateUrl.includes('blob:') && certificateUrl.includes('.pdf')) {
+                // For blob URLs, we need to handle PDFs differently
+                content.innerHTML = `
+                    <h3 style="margin-bottom: 20px; font-family: 'Montserrat', sans-serif;">Certificate for ${studentName}</h3>
+                    <iframe src="${certificateUrl}#toolbar=0&navpanes=0&scrollbar=0" class="certificate-pdf"></iframe>
+                `;
+            } else if (certificateUrl.toLowerCase().endsWith('.pdf')) {
+                content.innerHTML = `
+                    <h3 style="margin-bottom: 20px; font-family: 'Montserrat', sans-serif;">Certificate for ${studentName}</h3>
+                    <iframe src="${certificateUrl}#toolbar=0&navpanes=0&scrollbar=0" class="certificate-pdf"></iframe>
+                `;
+            } else {
+                content.innerHTML = `
+                    <h3 style="margin-bottom: 20px; font-family: 'Montserrat', sans-serif;">Certificate for ${studentName}</h3>
+                    <img src="${certificateUrl}" alt="Certificate" class="certificate-image">
+                `;
+            }
+            
+            modal.classList.add('active');
+        }
+
+        // Close certificate modal
+        function closeCertificateModal() {
+            document.getElementById('certificateModal').classList.remove('active');
+        }
+
+        // Setup form event listeners
+        function setupFormEventListeners() {
+            // Handle star rating
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('star-btn')) {
+                    const ratingContainer = e.target.parentElement;
+                    const rating = parseInt(e.target.dataset.rating);
+                    
+                    // Remove active class from all stars in this container
+                    ratingContainer.querySelectorAll('.star-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked star and all before it
+                    ratingContainer.querySelectorAll('.star-btn').forEach(btn => {
+                        if (parseInt(btn.dataset.rating) <= rating) {
+                            btn.classList.add('active');
+                        }
+                    });
+                }
+            });
+
+            // Handle form submission
+            const form = document.getElementById('feedbackForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const eventId = this.dataset.eventId;
+                    
+                    // Get ratings
+                    const ratings = {};
+                    document.querySelectorAll('.rating-stars').forEach(container => {
+                        const question = container.dataset.question;
+                        const activeStars = container.querySelectorAll('.star-btn.active').length;
+                        ratings[question] = activeStars;
+                    });
+                    
+                    // Get file
+                    const certificateFile = document.getElementById('certificateFile').files[0];
+                    let certificateUrl = '';
+                    
+                    if (certificateFile) {
+                        certificateUrl = URL.createObjectURL(certificateFile);
+                    }
+                    
+                    // Create feedback object
+                    const feedback = {
+                        name: formData.get('name'),
+                        usn: formData.get('usn'),
+                        academicYear: formData.get('academicYear'),
+                        suggestions: formData.get('suggestions'),
+                        certificateUrl: certificateUrl,
+                        timestamp: new Date().toISOString(),
+                        ...ratings
+                    };
+                    
+                    // Save to localStorage
+                    const feedbackData = JSON.parse(localStorage.getItem('event_feedback')) || {};
+                    if (!feedbackData[eventId]) {
+                        feedbackData[eventId] = [];
+                    }
+                    feedbackData[eventId].push(feedback);
+                    localStorage.setItem('event_feedback', JSON.stringify(feedbackData));
+                    
+                    // Show success message and reset form
+                    alert('Feedback submitted successfully!');
+                    openFeedbackForm(eventId, formData.get('name') || 'Event'); // Assuming name is the event name for now
+                });
+            }
+        }
+
+        // Close certificate modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('certificate-modal')) {
+                closeCertificateModal();
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderClubs();
+        });
+    </script>
+</body>
+</html> 

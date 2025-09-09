@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoEv - Club Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .landscape-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .form-panel {
+            background: rgba(235, 211, 248, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(173, 73, 225, 0.2);
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 1000px;
+            width: 90%;
+            transition: all 0.3s ease;
+        }
+        
+        .form-panel:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(173, 73, 225, 0.4);
+        }
+        
+        .form-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #AD49E1;
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .form-full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-label {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-input {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(173, 73, 225, 0.5);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #AD49E1;
+            box-shadow: 0 0 0 3px rgba(173, 73, 225, 0.1);
+        }
+        
+        .form-select {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(173, 73, 225, 0.5);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: #AD49E1;
+            box-shadow: 0 0 0 3px rgba(173, 73, 225, 0.1);
+        }
+        
+        .form-file {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(173, 73, 225, 0.5);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .form-file:focus {
+            outline: none;
+            border-color: #AD49E1;
+            box-shadow: 0 0 0 3px rgba(173, 73, 225, 0.1);
+        }
+        
+        /* Color Button Styles */
+        .color-button-section {
+            grid-column: 1 / -1;
+            margin: 20px 0;
+        }
+        
+        .color-button {
+            background: linear-gradient(0deg, #000000, #3432c7);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+        
+        .color-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(52, 50, 199, 0.4);
+        }
+        
+        .selected-color-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .selected-color-info {
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        /* Color Modal Styles */
+        .color-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .color-modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .color-modal-content {
+            background: rgba(235, 211, 248, 0.95);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .modal-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #AD49E1;
+            text-transform: uppercase;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #AD49E1;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background: rgba(173, 73, 225, 0.2);
+        }
+        
+        .color-picker-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .hue-slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .hue-slider {
+            width: 100%;
+            height: 20px;
+            border-radius: 10px;
+            background: linear-gradient(to right, 
+                #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, 
+                #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, 
+                #ff00ff, #ff0080, #ff0000);
+            outline: none;
+            cursor: pointer;
+        }
+        
+        .saturation-lightness {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            cursor: crosshair;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .color-info {
+            text-align: center;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #333;
+            margin-top: 15px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .modal-btn {
+            background: linear-gradient(0deg, #000000, #3432c7);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(52, 50, 199, 0.4);
+        }
+        
+        .cancel-btn {
+            background: transparent;
+            border: 2px solid #AD49E1;
+            color: #AD49E1;
+        }
+        
+        .cancel-btn:hover {
+            background: #AD49E1;
+            color: white;
+        }
+        
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .form-btn {
+            background: linear-gradient(0deg, #000000, #3432c7);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(52, 50, 199, 0.4);
+        }
+        
+        .secondary-btn {
+            background: transparent;
+            border: 2px solid #AD49E1;
+            color: #AD49E1;
+        }
+        
+        .secondary-btn:hover {
+            background: #AD49E1;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">CoEv</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Event Templates</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="recruitments.html">Recruitments</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+        <button id="theme-toggle">🌙</button>
+    </nav>
+
+    <div class="container" style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
+        <div class="form-panel">
+            <h2 class="form-title">Club Sign Up</h2>
+                
+                <form id="club-signup-form">
+                    <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Club Name</label>
+                        <input type="text" id="club-signup-name" placeholder="Enter Club Name" required class="form-input">
+                        </div>
+                        
+                    <div class="form-group">
+                        <label class="form-label">Club Type</label>
+                        <select id="club-signup-type" class="form-select" required>
+                                <option value="">Select Club Type</option>
+                                <option value="Technical">Technical</option>
+                                <option value="Non-Technical">Non-Technical</option>
+                            </select>
+                        </div>
+                        
+                    <div class="form-group">
+                        <label class="form-label">Club Code</label>
+                        <input type="text" id="club-signup-code" placeholder="Create Club Code" required class="form-input">
+                        </div>
+                        
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="club-signup-email" placeholder="Enter Email" required class="form-input">
+                        </div>
+                        
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="club-signup-password" placeholder="Create Password" required class="form-input">
+                        </div>
+                        
+                    <div class="form-group">
+                        <label class="form-label">Certificate Upload</label>
+                        <input type="file" id="club-signup-cert" accept=".pdf,.jpg,.jpeg,.png" class="form-file" required>
+                        </div>
+                        
+                    <div class="color-button-section">
+                        <button type="button" class="color-button" id="open-color-picker">
+                            🎨 Select Club Color
+                        </button>
+                        <div class="selected-color-display" id="selected-color-display" style="display: none;">
+                                <div class="color-preview" id="color-preview"></div>
+                            <div class="selected-color-info" id="selected-color-info">No color selected</div>
+                                </div>
+                                <input type="hidden" id="club-signup-color" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                    <button type="submit" class="form-btn">Sign Up</button>
+                    <a href="club-login.html" class="form-btn secondary-btn">Login</a>
+                    </div>
+                </form>
+        </div>
+    </div>
+
+    <!-- Color Picker Modal -->
+    <div class="color-modal" id="color-modal">
+        <div class="color-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Choose Club Color</h3>
+                <button class="close-modal" id="close-color-modal">&times;</button>
+            </div>
+            
+            <div class="color-picker-container">
+                <div class="hue-slider-container">
+                    <label style="color: #333; font-weight: 600; margin-bottom: 10px;">Hue</label>
+                    <input type="range" id="hue-slider" class="hue-slider" min="0" max="360" value="0">
+                    <canvas id="saturation-lightness" class="saturation-lightness"></canvas>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <div style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.3); margin-bottom: 20px;" id="modal-color-preview"></div>
+                    <div class="color-info" id="modal-color-info">Selected Color: #FF0000</div>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn" id="confirm-color">Confirm Color</button>
+                <button class="modal-btn cancel-btn" id="cancel-color">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/script.js"></script>
+    <script>
+        // Color picker functionality
+        const hueSlider = document.getElementById('hue-slider');
+        const saturationLightness = document.getElementById('saturation-lightness');
+        const modalColorPreview = document.getElementById('modal-color-preview');
+        const modalColorInfo = document.getElementById('modal-color-info');
+        const colorPreview = document.getElementById('color-preview');
+        const selectedColorInfo = document.getElementById('selected-color-info');
+        const selectedColorDisplay = document.getElementById('selected-color-display');
+        const colorInput = document.getElementById('club-signup-color');
+        
+        let currentHue = 0;
+        let currentSaturation = 100;
+        let currentLightness = 50;
+        let selectedColor = null;
+        
+        // Modal functionality
+        const colorModal = document.getElementById('color-modal');
+        const openColorPicker = document.getElementById('open-color-picker');
+        const closeColorModal = document.getElementById('close-color-modal');
+        const confirmColor = document.getElementById('confirm-color');
+        const cancelColor = document.getElementById('cancel-color');
+        
+        openColorPicker.addEventListener('click', () => {
+            colorModal.classList.add('active');
+            drawSaturationLightness();
+            updateModalColor();
+        });
+        
+        closeColorModal.addEventListener('click', () => {
+            colorModal.classList.remove('active');
+        });
+        
+        cancelColor.addEventListener('click', () => {
+            colorModal.classList.remove('active');
+        });
+        
+        confirmColor.addEventListener('click', () => {
+            selectedColor = `hsl(${currentHue}, ${currentSaturation}%, ${currentLightness}%)`;
+            colorPreview.style.backgroundColor = selectedColor;
+            colorInput.value = selectedColor;
+            selectedColorInfo.textContent = `Selected: ${selectedColor}`;
+            selectedColorDisplay.style.display = 'flex';
+            colorModal.classList.remove('active');
+        });
+        
+        // Close modal when clicking outside
+        colorModal.addEventListener('click', (e) => {
+            if (e.target === colorModal) {
+                colorModal.classList.remove('active');
+            }
+        });
+        
+        // Initialize canvas
+        const ctx = saturationLightness.getContext('2d');
+        const canvas = saturationLightness;
+        
+        // Set canvas size
+        canvas.width = 200;
+        canvas.height = 200;
+        
+        function drawSaturationLightness() {
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Create gradient
+            const gradient = ctx.createLinearGradient(0, 0, width, 0);
+            gradient.addColorStop(0, `hsl(${currentHue}, 0%, 50%)`);
+            gradient.addColorStop(1, `hsl(${currentHue}, 100%, 50%)`);
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+            
+            // Add lightness gradient
+            const lightnessGradient = ctx.createLinearGradient(0, 0, 0, height);
+            lightnessGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+            lightnessGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
+            lightnessGradient.addColorStop(1, 'rgba(0, 0, 0, 1)');
+            
+            ctx.fillStyle = lightnessGradient;
+            ctx.fillRect(0, 0, width, height);
+            
+            // Draw selection point
+            const x = (currentSaturation / 100) * width;
+            const y = (1 - currentLightness / 100) * height;
+            
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(x, y, 8, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(x, y, 8, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+        
+        function updateModalColor() {
+            const color = `hsl(${currentHue}, ${currentSaturation}%, ${currentLightness}%)`;
+            modalColorPreview.style.backgroundColor = color;
+            modalColorInfo.textContent = `Selected Color: ${color}`;
+        }
+        
+        // Event listeners with throttling for better performance
+        let isDragging = false;
+        
+        hueSlider.addEventListener('input', (e) => {
+            currentHue = parseInt(e.target.value);
+            drawSaturationLightness();
+            updateModalColor();
+        });
+        
+        saturationLightness.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            updateColorFromMouse(e);
+        });
+        
+        saturationLightness.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                updateColorFromMouse(e);
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+        
+        saturationLightness.addEventListener('click', (e) => {
+            updateColorFromMouse(e);
+        });
+        
+        function updateColorFromMouse(e) {
+            const rect = saturationLightness.getBoundingClientRect();
+            const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+            const y = Math.max(0, Math.min(e.clientY - rect.top, rect.height));
+            
+            currentSaturation = (x / rect.width) * 100;
+            currentLightness = (1 - y / rect.height) * 100;
+            
+            drawSaturationLightness();
+            updateModalColor();
+        }
+        
+        // Club signup form handling
+        document.getElementById('club-signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('club-signup-name').value;
+            const type = document.getElementById('club-signup-type').value;
+            const code = document.getElementById('club-signup-code').value;
+            const color = document.getElementById('club-signup-color').value;
+            const email = document.getElementById('club-signup-email').value;
+            const password = document.getElementById('club-signup-password').value;
+            const cert = document.getElementById('club-signup-cert').files[0];
+            
+            if (!name || !type || !code || !color || !email || !password || !cert) {
+                alert('Please fill in all fields and select a color');
+                return;
+            }
+            
+            // Check if club name or code already exists
+            const clubs = JSON.parse(localStorage.getItem('clubs') || '[]');
+            if (clubs.find(c => c.name === name || c.code === code)) {
+                alert('Club name or code already exists. Please choose different ones.');
+                return;
+            }
+            
+            // Create new club
+            const newClub = {
+                name,
+                type,
+                code,
+                color,
+                email,
+                password,
+                events: [],
+                recruitments: []
+            };
+            
+            clubs.push(newClub);
+            localStorage.setItem('clubs', JSON.stringify(clubs));
+            localStorage.setItem('currentClub', JSON.stringify(newClub));
+            
+            alert('Club registered successfully!');
+            window.location.href = 'club.html';
+        });
+    </script>
+</body>
+</html> 
